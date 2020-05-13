@@ -1,0 +1,360 @@
+---
+title: "FSK2R: an interface between FSK-ML and R"
+author: "Alberto Garre, Miguel de Alba-Aparicio, Pablo S. Fernandez, Matthias Filter"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{basics_of_FSK2R}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+## The FSK2R package
+
+The **FSK2R** package provides an interface between the R programming language and the FSK-ML standard. It enables to import already existing models compliant with the FSK-ML standard into R. It also includes functions for the creation of a model with the FSK-ML format based on an already existing R model (an R script). The models can be queried and editted in R. This includes running the simulations included in the model, as well as defining new ones. Finally, the models can be exported as an .fskx file, compliant with the FSK-ML standard.
+
+This document first makes a brief description of the FSK-ML standard. Then, it describes the main features of the **FSK2R** package using several examples. These are:
+
+* Import of existing FSK-ML compliant models into R.
+* Creating of FSK-ML compliant files based on already existing R models.
+* Running the simulations included in an FSK file, as well as editting the existing ones and adding new ones.
+* Exporting the FSK model (potentially created or editted in R) as a file compliant with FSK-ML.
+* Checking the compliance of an FSK file with the FSK-ML standard.
+
+The package can easily be installed from CRAN with the following line of code:
+
+```{r}
+# install.packages("FSK2R")
+```
+
+Once installed, it can be loaded with:
+
+```{r}
+library(FSK2R)
+```
+
+## The FSK-ML (Food Safety Markup Language) standard
+
+Food safety risk assessments, control of food production processes as well as the development of new food products are nowadays supported by application of mathematical modelling and data analysis techniques. This creates an increasing demand for resources facilitating the efficient, transparent and quality proven exchange of relevant information, e.g. analytical data, mathematical models, simulation setting as well as simulated data. For example, new parameterized microbial models are frequently made publicly available only in written mode via scientific publications. However, in order to apply these models to a given practical decision support question (e.g. on the growth/no-growth of a microorganism in a specific food matrix under given processing conditions) the interested end-user would have to re-implement the model based on information provided in a publication. Here it would be more efficient if those who create parameterized models could provide their model additionally as a file complying with a standardized file format that is also capable of transferring all relevant meta data. Such a file could e.g. be provided as a supplement to the publication and could be read-in by the end user’s software tools (thus overcoming an error-prone re-implementation process).
+
+A first standardized file format has been proposed in the “Predictive Modelling in Food Markup Language (PMF-ML) Software Developer Guide”. This document describes in detail how experimental data and mathematical models from the domain of predictive microbial modelling (and beyond) can be saved and encoded in a software independent manner. With the Food Safety Knowledge Markup Language (FSK-ML) we now extend the PMF-ML format to enable the exchange of knowledge / information that is embedded in specific script-based programming languages (e.g. “R”, Matlab, Python). I.e. the FSK-ML guidance document primarily aims at harmonizing the exchange of food safety knowledge (e.g. predictive models) including the associated meta data where this knowledge is only available in a software dependent format.
+The FSK-ML format therefore relaxes and adapts certain specifications of the PMF-ML format while at the same time maintaining the highest possible synergies between both formats. This will also help to make sure that food safety models encoded in a software independent manner (using PMF-ML) can easily be interpreted by FSK-ML import and export software functions in the future.
+
+## Importing an FSK file
+
+The **FSK2R** packages includes the function *import_fsk()* for importing a model file compatible with the FSK-ML standard into R. This function has two arguments:
+
+* `file_path`: the path to the FSK file.
+* `check`: whether some automatic checks are made (`FALSE` by default).
+
+The **FSK2R** package includes an example FSK file to use as teaching material. Additional files can be downloaded, for instance, in the RAKIP model repository (https://foodrisklabs.bfr.bund.de/rakip-model-repository-web-services/). The location of the example file can be retrieved with the following code.
+
+```{r}
+path_example <- system.file("extdata", "ToyModelv4.fskx", package = "FSK2R")
+print(path_example)
+```
+
+In this vignette, we will use that example file to demonstrate the features included in **FSK2R**. To import the file into R, we just have to call `import_fsk()` with the path to the file as only argument.
+
+
+```{r}
+my_fsk <- import_fsk(path_example)
+```
+
+The function creates a list of class `FSK2R`.
+
+```{r}
+class(my_fsk)
+```
+
+The package includes a function to test whether an object is an instance of `FSK2R`:
+
+```{r}
+is.FSK2R(my_fsk)
+```
+The list of class `FSK2R` has several entries, each one corresponding to one file in the original FSK file.
+
+```{r}
+names(my_fsk)
+```
+
+The entry `manifest` is a `data.frame` which lists the location of all the files within the FSK file:
+
+```{r}
+my_fsk$manifest
+```
+
+The entry `metadata` is a nested list including all the meta-information of the model. For further information about this item, go to the section *Visualizing and editting the metadata of an FSK2R object* of this manual.
+
+The entry `model_metadata` includes the information that was defined in the *metadata.rdf* file of the FSK container. It is saved as a nested list.
+
+The entry `model` includes all the information originally included in the *model.sbml* file. This includes (among others) the model parameters. It is a nested list:
+
+```{r}
+my_fsk$model
+```
+The entry `packages` is a `list` with all the R packages required by the model. 
+
+```{r}
+my_fsk$packages
+```
+
+The entry `readme` includes the text defined in the README file:
+
+```{r}
+my_fsk$readme
+```
+
+The entry `simulation` is a nested list with the data defning the simulations. For more details on this item, go to section *Running and editting simulations in the FSK file*.
+
+The entry `R_model` includes the code of the R model.
+
+```{r}
+cat(my_fsk$R_model)
+```
+
+Finally, `visualization` contains the code of the visualization script:
+
+```{r}
+cat(my_fsk$visualization)
+```
+
+## Creating an FSK model based on an existing R file
+
+The functions in the **FSK2R** package can be used to create a model compliant with the FSK-ML standard based on an already existing R script. This can be accomplished using the `create_fsk()` function. It has five arguments:
+
+* `r_model`: the path to the R script where the model is defined.
+* `r_visualization`: the path to the visualization script (optional).
+* `readme`: A character describing the contents of the README file (optional).
+* `other_files`: the path to other files that may be required by the model (optional).
+* `pckg_frame`: a `data.frame` describing the dependencies. It must have two columns: `Package` (the package name) and `Version` the package version (optional).
+
+The **FSK2R** includes an example model file and an example visualization file that can be used for learning purposes. The path of the model file can be found with:
+
+```{r}
+model_path <- system.file("extdata", "model.r", package = "FSK2R")
+print(model_path)
+```
+
+And the one of the visualization file:
+
+```{r}
+visualization_path <- system.file("extdata", "visualization.r", package = "FSK2R")
+print(visualization_path)
+```
+
+We can create a new FSK object by passing both paths to the `create_fsk()` function. The remaining arguments will be left to their default values and the information will be filled in later.
+
+```{r}
+FSK_from_R <- create_fsk(model_path, visualization_path)
+```
+
+The variable `FSK_from_R` now contains an instance of class `FSK2R`.
+
+```{r}
+class(FSK_from_R)
+```
+
+It has the common structure of this object, compatible with the FSK-ML format. 
+
+```{r}
+names(FSK_from_R)
+```
+
+The function generates the typical `model_metadata`
+
+```{r}
+FSK_from_R$model_metadata
+```
+
+## Running and editting simulations in the FSK file
+
+The **FSK2R** package is able to run the simulations defined in an FSK-ML model, as long as they are written in the R programming language. The model
+
+```{r}
+is_fsk_with_r(FSK_from_R)
+```
+
+The number of models included in `FSK_from_R` can be checked with the `n_simuls_fsk()` function included in **FSK2R**:
+
+```{r}
+n_simuls_fsk(FSK_from_R)
+```
+
+In this case, the FSK model includes a single simulation. It can be run with the function `run_simulation()`. This function takes three arguments:
+
+* `fsk_object`: an instance of FSK2R.
+* `index`: an identifier for the simulation.
+* `run_visualization`: whether to run the visualizatino script (FALSE by default).
+
+Because `my_fsk` only has one simulation, we will set `index = 1`. When the function is called without specifying that the visualization script shall be run, the simulation is run silently (besides any `print` or `cat` defined in *model.R*):
+
+```{r}
+run_simulation(FSK_from_R, 1)
+```
+
+In order to run the simulation, `run_visualization` must be set to TRUE.
+
+```{r}
+run_simulation(FSK_from_R, 1, TRUE)
+```
+
+The **FSK2R** package can be used to define new simulations for the model using the function `set_new_simulation()`. It has three arguments:
+
+* `fsk_object`: an instance of FSK2R.
+*  `simulation_id`: an identificator for the new simulation.
+*  `parameters`: a list describing what parameters to change.
+
+Because of the scoping rules of R, the function does not change the `fsk_object` in place. Instead, it returns a copy of the FSK2R list with the additional information about the simulations added.
+
+```{r}
+new_model <- set_new_simulation(my_fsk, "new", 
+                                list(r = 0.09,
+                                     Dose_matrix = "as.matrix(read.table(file =\"Dose_matrix.csv\",sep=\",\", header = TRUE, row.names=1))",
+                                     alpha = 0.05,
+                                     beta = 0.045,
+                                     eta = 0.003
+                                     )
+                                )
+```
+
+We can now check that `new_model` has one new simulation than the original model:
+
+```{r}
+n_simuls_fsk(new_model)
+```
+
+The new simulation can be run using the `run_simulation` function as shown above. The package also has the function `run_all_simulations` to run every simulation included in the model.
+
+## Setters and getters
+
+The **FSK2R** package includes several functions to query and edit the contents of a FSK-ML compliant model. This section describes them, except for those used for the metadata, which as presented in the following section.
+
+The object `FSK_from_R` that we defined before did not have a readme. It can be defined with the function `set_readme()` included in **FSK2R**. This function takes two arguments:
+
+* `fsk_object` an instance of FSK2R.
+* `readme_text` A character string with the README text.
+
+Note that this function does not directly update `fsk_object`. Instead, it returns a copy with the updated information.
+
+```{r}
+readme_text <- "This is an FSK-ML compliant model generated based on an existing R script"
+FSK_from_R <- set_readme(FSK_from_R, readme_text)
+```
+
+Then, the **FSK2R** package includes several functions to query the contents of an instance of `FSK2R`. For instance, we can retrieve the README content we just defined with `get_readme()`:
+
+```{r}
+get_readme(FSK_from_R)
+```
+
+Furthermore, the data used for the simulations can also be retrieved with `get_simulations()`:
+
+```{r}
+# get_simulations(my_fsk)
+```
+
+## Visualizing and editting the metadata of an FSK2R object
+
+The **FSK2R** package implements several getters specific for summarizing the metadata of an `FSK2R` object. All of them take an object of class `FSK2R` as argument and return a nested list with the relevant information.
+
+The function `get_general_info()` summarizes the general metainformation of the model:
+
+```{r}
+get_general_info(my_fsk)
+```
+
+The function `get_scope()` returns the scope of the model:
+
+```{r}
+get_scope(my_fsk)
+```
+
+The function `get_background()` returns the background information of the model:
+
+```{r}
+get_background(my_fsk)
+```
+
+The function `get_modelmath()` returns the metainformation of the model parameters:
+
+```{r}
+get_modelmath(my_fsk)
+```
+
+The package also includes functions for updating the metadata based on the template available online: https://docs.google.com/spreadsheets/d/12ujuQn49Gp2F-zMbCAgsu9wYfLjooeR2c2Ec1zkLkl0/edit#gid=766274181. 
+
+For ease of use, the package includes the function `download_metadata_schema()` to download the latest version of the Metadata Template (at the moment of the package update to CRAN). This function takes as only argument the path where to save the template as a text file. Note that this function may request the user to authenticate with his/her gmail account name and password. This information is handled by the **googlesheets** package and is not, under any circumnstance, accesible to the **FSK2R** package.
+
+```{r, eval=FALSE}
+# download_metadata_schema("my_template.xlsx")
+```
+
+The **FSK2R** package includes functions to update the metainformation in an instance of `FSK2R` with the data defined in a Metadata Template (either in Excel or GoogleSheets format). The function `read_fsk_metadata()` is used for templates created in GoogleSheets and the function `read_fsk_metadata_excel()` for those created in Excel and saved locally. Both functions takes three arguments:
+
+* `fsk_object`: The instance of `FSK2R` to update.
+* `title` (only `read_fsk_metadata()`): Title of the GoogleSheet where the metadata is stored.
+* `path` (only `read_fsk_metadata_excel()`): Path where the Metadata Template is saved.
+* `type_of_model`: Type of model.
+
+Note that the function `read_fsk_metadata()` may request the user to authenticate with his/her gmail account name and password. This information is handled by the **googlesheets** package and is not, under any circumnstance, accesible to the **FSK2R** package.
+
+For training purposes, the **FSK2R** package includes an example Metadata Template in excel format. The path where it is saved can be accessed with the following command.
+
+```{r}
+template_path <- system.file("extdata", "example_template.xlsx", package = "FSK2R")
+print(template_path)
+```
+
+We will use the data in the template to populate the metadata of the FSK-ML compliant file that we generated from an R script.
+
+```{r}
+FSK_from_R <- read_fsk_metadata_excel(FSK_from_R, template_path)
+```
+
+## Exporting the FSK file
+
+Finally, the package includes the function `export_fsk()` for exporting the instance of `FSK2R` as a file compliant with the FSK-ML format. This function takes two arguments:
+
+* `fsk_object`: the instance of `FSK2R` to export.
+* `out_path`: the path where to save the file.
+* `check`: whether some checks on the file are performed (TRUE by default).
+
+As a demonstration, we will export the object `my_fsk` as an FSK-ML compliant file called *out.fskx*.
+
+```{r}
+export_fsk(my_fsk, out_path=file.path(tempdir(), "out.fskx"))
+```
+
+This file can be imported back into R using the `import_fsk()` function, as usual.
+
+```{r}
+imported_model <- import_fsk(file.path(tempdir(), "out.fskx"))
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

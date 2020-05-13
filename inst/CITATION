@@ -1,0 +1,11 @@
+citHeader("FSK2R was developed as a collaboration between the BfR and the Technical University of Cartagena.
+It was presented in the 11th International Conference on Predictive Modelling in Food held in Bragança, Portugal, on September 2019.")
+
+citEntry(entry = "Unpublished",
+  author = "A. Garre and J.L. Penalver-Soto and M. de Alba Aparicio and J.A. Egea and P.S. Fernandez and M. Filter",
+  title = "FSK2R: a new R library to support Food Safety Knowledge Markup Language (FSK-ML)",
+    year = "2019",
+    textVersion = "A. Garre, J.L. Penalver-Soto, M. de Alba Aparicio, J.A. Egea, P.S. Fernandez and M. Filter,
+    FSK2R: a new R library to support Food Safety Knowledge Markup Language (FSK-ML). 11th International Conference on Predictive Modelling in Food",
+    note = "Article in preparation."
+)

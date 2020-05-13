@@ -1,0 +1,23 @@
+---
+title: "About FSK runner"
+author: "Alberto"
+date: "25 de enero de 2019"
+output: md_document
+---
+
+
+# FSK Runner
+
+FSK2R was developed as a collaboration between the BfR and the Technical University of Cartagena. It
+was presented in the 11th International Conference on Predictive Modelling in Food held in Bragança,
+Portugal, on September 2019.
+
+  A. Garre, J.L. Penalver-Soto, M. de Alba Aparicio, J.A. Egea, P.S. Fernandez and M. Filter, FSK2R:
+  a new R library to support Food Safety Knowledge Markup Language (FSK-ML). 11th International
+  Conference on Predictive Modelling in Food
+  
+FSK Runner is a user-friendly interface to some of the functions included in the FSK2R package.
+
+The code of the project can be accessed in the GitLab page of the project. Please, use it also bug reports.
+
+[GitLab page of the project](https://gitlab.com/miguelalba/fsk2r)
