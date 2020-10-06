@@ -1,7 +1,7 @@
 Package: FSK2R
 Type: Package
 Title: An Interface Between the 'FSK-ML' Standard and 'R'
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: c(person("Alberto", "Garre", email = "garre.alberto@gmail.com", role = c("aut", "cre")),
              person("Miguel", "de Alba Aparicio", email = "Miguel.de-Alba-Aparicio@bfr.bund.de", role = "aut"),
              person("Pablo S.", "Fernandez", email = "pablo.fernandez@upct.es", role = "aut"),
@@ -24,11 +24,11 @@ VignetteBuilder: knitr
 LazyData: true
 RoxygenNote: 7.1.0
 NeedsCompilation: no
-Packaged: 2020-05-11 12:26:02 UTC; alberto
+Packaged: 2020-10-06 08:47:41 UTC; alberto
 Author: Alberto Garre [aut, cre],
   Miguel de Alba Aparicio [aut],
   Pablo S. Fernandez [aut],
   Matthias Filter [aut]
 Maintainer: Alberto Garre <garre.alberto@gmail.com>
 Repository: CRAN
-Date/Publication: 2020-05-13 15:00:02 UTC
+Date/Publication: 2020-10-06 09:00:02 UTC

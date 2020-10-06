@@ -12,7 +12,7 @@
 
 <meta name="author" content="Alberto Garre, Miguel de Alba-Aparicio, Pablo S. Fernandez, Matthias Filter" />
 
-<meta name="date" content="2020-05-11" />
+<meta name="date" content="2020-10-06" />
 
 <title>FSK2R: an interface between FSK-ML and R</title>
 
@@ -20,26 +20,27 @@
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(title);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -48,9 +49,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -303,7 +304,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <h1 class="title toc-ignore">FSK2R: an interface between FSK-ML and R</h1>
 <h4 class="author">Alberto Garre, Miguel de Alba-Aparicio, Pablo S. Fernandez, Matthias Filter</h4>
-<h4 class="date">2020-05-11</h4>
+<h4 class="date">2020-10-06</h4>
 
 
 
@@ -319,9 +320,9 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <li>Checking the compliance of an FSK file with the FSK-ML standard.</li>
 </ul>
 <p>The package can easily be installed from CRAN with the following line of code:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># install.packages(&quot;FSK2R&quot;)</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="co"># install.packages(&quot;FSK2R&quot;)</span></span></code></pre></div>
 <p>Once installed, it can be loaded with:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">library</span>(FSK2R)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">library</span>(FSK2R)</span></code></pre></div>
 </div>
 <div id="the-fsk-ml-food-safety-markup-language-standard" class="section level2">
 <h2>The FSK-ML (Food Safety Markup Language) standard</h2>
@@ -336,46 +337,46 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <li><code>check</code>: whether some automatic checks are made (<code>FALSE</code> by default).</li>
 </ul>
 <p>The <strong>FSK2R</strong> package includes an example FSK file to use as teaching material. Additional files can be downloaded, for instance, in the RAKIP model repository (<a href="https://foodrisklabs.bfr.bund.de/rakip-model-repository-web-services/" class="uri">https://foodrisklabs.bfr.bund.de/rakip-model-repository-web-services/</a>). The location of the example file can be retrieved with the following code.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">path_example &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;ToyModelv4.fskx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;FSK2R&quot;</span>)</a>
-<a class="sourceLine" id="cb3-2" title="2"><span class="kw">print</span>(path_example)</a></code></pre></div>
-<pre><code>## [1] &quot;C:/Users/alberto/AppData/Local/Temp/RtmpKeiY4U/Rinst182cfb32897/FSK2R/extdata/ToyModelv4.fskx&quot;</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>path_example &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;ToyModelv4.fskx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;FSK2R&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="kw">print</span>(path_example)</span></code></pre></div>
+<pre><code>## [1] &quot;C:/Users/alberto/AppData/Local/Temp/Rtmpa21xJs/Rinst2ba07cd82054/FSK2R/extdata/ToyModelv4.fskx&quot;</code></pre>
 <p>In this vignette, we will use that example file to demonstrate the features included in <strong>FSK2R</strong>. To import the file into R, we just have to call <code>import_fsk()</code> with the path to the file as only argument.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">my_fsk &lt;-<span class="st"> </span><span class="kw">import_fsk</span>(path_example)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>my_fsk &lt;-<span class="st"> </span><span class="kw">import_fsk</span>(path_example)</span></code></pre></div>
 <p>The function creates a list of class <code>FSK2R</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">class</span>(my_fsk)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="kw">class</span>(my_fsk)</span></code></pre></div>
 <pre><code>## [1] &quot;FSK2R&quot; &quot;list&quot;</code></pre>
 <p>The package includes a function to test whether an object is an instance of <code>FSK2R</code>:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">is.FSK2R</span>(my_fsk)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="kw">is.FSK2R</span>(my_fsk)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>The list of class <code>FSK2R</code> has several entries, each one corresponding to one file in the original FSK file.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">names</span>(my_fsk)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="kw">names</span>(my_fsk)</span></code></pre></div>
 <pre><code>##  [1] &quot;manifest&quot;       &quot;metadata&quot;       &quot;model_metadata&quot; &quot;model&quot;         
 ##  [5] &quot;packages&quot;       &quot;readme&quot;         &quot;simulation&quot;     &quot;R_model&quot;       
 ##  [9] &quot;visualization&quot;  &quot;other_files&quot;</code></pre>
 <p>The entry <code>manifest</code> is a <code>data.frame</code> which lists the location of all the files within the FSK file:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">my_fsk<span class="op">$</span>manifest</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a>my_fsk<span class="op">$</span>manifest</span></code></pre></div>
 <pre><code>## # A tibble: 15 x 4
 ##    format                            location             filename      filetype
 ##    &lt;chr&gt;                             &lt;chr&gt;                &lt;chr&gt;         &lt;chr&gt;   
-##  1 http://identifiers.org/combine.s~ .                    .             &quot;&quot;      
-##  2 https://www.iana.org/assignments~ ./Dose_matrix.csv    Dose_matrix.~ csv     
-##  3 http://purl.org/NET/mediatypes/a~ ./gridExtra_2.3.zip  gridExtra_2.~ zip     
-##  4 https://www.iana.org/assignments~ ./packages.json      packages.json json    
-##  5 http://purl.org/NET/mediatypes/t~ ./README.txt         README.txt    txt     
-##  6 http://purl.org/NET/mediatypes/a~ ./simulations/defau~ defaultSimul~ R       
-##  7 http://identifiers.org/combine.s~ &quot;.\\metadata.rdf&quot;    metadata.rdf  rdf     
-##  8 http://identifiers.org/combine.s~ ./manifest.xml       manifest.xml  xml     
-##  9 http://purl.org/NET/mediatypes/a~ ./model.sbml         model.sbml    sbml    
-## 10 http://purl.org/NET/mediatypes/a~ ./ggplot2_3.1.0.zip  ggplot2_3.1.~ zip     
-## 11 http://purl.org/NET/mediatypes/a~ ./visualization.r    visualizatio~ r       
-## 12 http://identifiers.org/combine.s~ ./sim.sedml          sim.sedml     sedml   
-## 13 http://purl.org/NET/mediatypes/a~ ./workspace.r        workspace.r   r       
-## 14 http://purl.org/NET/mediatypes/a~ ./model.r            model.r       r       
-## 15 https://www.iana.org/assignments~ ./metaData.json      metaData.json json</code></pre>
+##  1 http://identifiers.org/combine.s~ &quot;.&quot;                  .             &quot;&quot;      
+##  2 https://www.iana.org/assignments~ &quot;./Dose_matrix.csv&quot;  Dose_matrix.~ &quot;csv&quot;   
+##  3 http://purl.org/NET/mediatypes/a~ &quot;./gridExtra_2.3.zi~ gridExtra_2.~ &quot;zip&quot;   
+##  4 https://www.iana.org/assignments~ &quot;./packages.json&quot;    packages.json &quot;json&quot;  
+##  5 http://purl.org/NET/mediatypes/t~ &quot;./README.txt&quot;       README.txt    &quot;txt&quot;   
+##  6 http://purl.org/NET/mediatypes/a~ &quot;./simulations/defa~ defaultSimul~ &quot;R&quot;     
+##  7 http://identifiers.org/combine.s~ &quot;.\\metadata.rdf&quot;    metadata.rdf  &quot;rdf&quot;   
+##  8 http://identifiers.org/combine.s~ &quot;./manifest.xml&quot;     manifest.xml  &quot;xml&quot;   
+##  9 http://purl.org/NET/mediatypes/a~ &quot;./model.sbml&quot;       model.sbml    &quot;sbml&quot;  
+## 10 http://purl.org/NET/mediatypes/a~ &quot;./ggplot2_3.1.0.zi~ ggplot2_3.1.~ &quot;zip&quot;   
+## 11 http://purl.org/NET/mediatypes/a~ &quot;./visualization.r&quot;  visualizatio~ &quot;r&quot;     
+## 12 http://identifiers.org/combine.s~ &quot;./sim.sedml&quot;        sim.sedml     &quot;sedml&quot; 
+## 13 http://purl.org/NET/mediatypes/a~ &quot;./workspace.r&quot;      workspace.r   &quot;r&quot;     
+## 14 http://purl.org/NET/mediatypes/a~ &quot;./model.r&quot;          model.r       &quot;r&quot;     
+## 15 https://www.iana.org/assignments~ &quot;./metaData.json&quot;    metaData.json &quot;json&quot;</code></pre>
 <p>The entry <code>metadata</code> is a nested list including all the meta-information of the model. For further information about this item, go to the section <em>Visualizing and editting the metadata of an FSK2R object</em> of this manual.</p>
 <p>The entry <code>model_metadata</code> includes the information that was defined in the <em>metadata.rdf</em> file of the FSK container. It is saved as a nested list.</p>
 <p>The entry <code>model</code> includes all the information originally included in the <em>model.sbml</em> file. This includes (among others) the model parameters. It is a nested list:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">my_fsk<span class="op">$</span>model</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a>my_fsk<span class="op">$</span>model</span></code></pre></div>
 <pre><code>## $sbml
 ## $sbml$model
 ## $sbml$model$listOfParameters
@@ -521,7 +522,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 ## attr(,&quot;xmlns:fsk&quot;)
 ## [1] &quot;https://foodrisklabs.bfr.bund.de/wp-content/uploads/2017/01/FSK-ML_guidance_document_021216.pdf&quot;</code></pre>
 <p>The entry <code>packages</code> is a <code>list</code> with all the R packages required by the model.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">my_fsk<span class="op">$</span>packages</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a>my_fsk<span class="op">$</span>packages</span></code></pre></div>
 <pre><code>## $Language
 ## [1] &quot;R 3&quot;
 ## 
@@ -557,11 +558,11 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 ## $PackageList[[4]]$Version
 ## [1] &quot;2.3&quot;</code></pre>
 <p>The entry <code>readme</code> includes the text defined in the README file:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1">my_fsk<span class="op">$</span>readme</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true"></a>my_fsk<span class="op">$</span>readme</span></code></pre></div>
 <pre><code>## [1] &quot;## FSK-Lab\nThis model is made available in the FSK-ML format, i.e. as .fskx file. To execute the model or to perform model-based predictions it is recommended to use the software FSK-Lab. FSK-Lab is an open-source extension of the open-source data analytics platform KNIME. To install FSK-Lab follow the installation instructions available at: https://foodrisklabs.bfr.bund.de/fsk-lab_de/. Once FSK-Lab is installed a new KNIME workflow should be created and the \&quot;FSKX Reader\&quot; node should be dragged into it. This \&quot;FSKX Reader\&quot; node can be configured to read in the given \&quot;.fskx\&quot; file. To perform a model-based prediction connect the out-port of the \&quot;FSKX Reader\&quot; node with the \&quot;FSK Simulation Configurator JS\&quot; node to adjust if necessary input parameters and store this into a user defined simulation setting, After that connect the output port with the input of a FSK Runner node that perform the simulation and look at the results at the node&#39;s outport.\n## FSK-Lab&quot;</code></pre>
 <p>The entry <code>simulation</code> is a nested list with the data defning the simulations. For more details on this item, go to section <em>Running and editting simulations in the FSK file</em>.</p>
 <p>The entry <code>R_model</code> includes the code of the R model.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">cat</span>(my_fsk<span class="op">$</span>R_model)</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true"></a><span class="kw">cat</span>(my_fsk<span class="op">$</span>R_model)</span></code></pre></div>
 <pre><code>## #########################################################################################
 ## # Code
 ## # Quantitative risk assessment of norovirus transmission in food establishments:
@@ -636,7 +637,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 ## resFin
 ## res_df&lt;-t(round(as.data.frame(resFin),2))</code></pre>
 <p>Finally, <code>visualization</code> contains the code of the visualization script:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw">cat</span>(my_fsk<span class="op">$</span>visualization)</a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true"></a><span class="kw">cat</span>(my_fsk<span class="op">$</span>visualization)</span></code></pre></div>
 <pre><code>## qplot(1:10, 1:10, geom = &quot;blank&quot;) + theme_bw() + theme(line = element_blank(), text = element_blank()) +
 ##   # Then I add my table :
 ##   annotation_custom(grob = tableGrob(res_df))
@@ -653,25 +654,25 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <li><code>pckg_frame</code>: a <code>data.frame</code> describing the dependencies. It must have two columns: <code>Package</code> (the package name) and <code>Version</code> the package version (optional).</li>
 </ul>
 <p>The <strong>FSK2R</strong> includes an example model file and an example visualization file that can be used for learning purposes. The path of the model file can be found with:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">model_path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;model.r&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;FSK2R&quot;</span>)</a>
-<a class="sourceLine" id="cb24-2" title="2"><span class="kw">print</span>(model_path)</a></code></pre></div>
-<pre><code>## [1] &quot;C:/Users/alberto/AppData/Local/Temp/RtmpKeiY4U/Rinst182cfb32897/FSK2R/extdata/model.r&quot;</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true"></a>model_path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;model.r&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;FSK2R&quot;</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true"></a><span class="kw">print</span>(model_path)</span></code></pre></div>
+<pre><code>## [1] &quot;C:/Users/alberto/AppData/Local/Temp/Rtmpa21xJs/Rinst2ba07cd82054/FSK2R/extdata/model.r&quot;</code></pre>
 <p>And the one of the visualization file:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1">visualization_path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;visualization.r&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;FSK2R&quot;</span>)</a>
-<a class="sourceLine" id="cb26-2" title="2"><span class="kw">print</span>(visualization_path)</a></code></pre></div>
-<pre><code>## [1] &quot;C:/Users/alberto/AppData/Local/Temp/RtmpKeiY4U/Rinst182cfb32897/FSK2R/extdata/visualization.r&quot;</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true"></a>visualization_path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;visualization.r&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;FSK2R&quot;</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true"></a><span class="kw">print</span>(visualization_path)</span></code></pre></div>
+<pre><code>## [1] &quot;C:/Users/alberto/AppData/Local/Temp/Rtmpa21xJs/Rinst2ba07cd82054/FSK2R/extdata/visualization.r&quot;</code></pre>
 <p>We can create a new FSK object by passing both paths to the <code>create_fsk()</code> function. The remaining arguments will be left to their default values and the information will be filled in later.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">FSK_from_R &lt;-<span class="st"> </span><span class="kw">create_fsk</span>(model_path, visualization_path)</a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true"></a>FSK_from_R &lt;-<span class="st"> </span><span class="kw">create_fsk</span>(model_path, visualization_path)</span></code></pre></div>
 <p>The variable <code>FSK_from_R</code> now contains an instance of class <code>FSK2R</code>.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="kw">class</span>(FSK_from_R)</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true"></a><span class="kw">class</span>(FSK_from_R)</span></code></pre></div>
 <pre><code>## [1] &quot;FSK2R&quot; &quot;list&quot;</code></pre>
 <p>It has the common structure of this object, compatible with the FSK-ML format.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="kw">names</span>(FSK_from_R)</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true"></a><span class="kw">names</span>(FSK_from_R)</span></code></pre></div>
 <pre><code>## [1] &quot;manifest&quot;       &quot;metadata&quot;       &quot;model_metadata&quot; &quot;model&quot;         
 ## [5] &quot;packages&quot;       &quot;readme&quot;         &quot;simulation&quot;     &quot;R_model&quot;       
 ## [9] &quot;visualization&quot;</code></pre>
 <p>The function generates the typical <code>model_metadata</code></p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">FSK_from_R<span class="op">$</span>model_metadata</a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true"></a>FSK_from_R<span class="op">$</span>model_metadata</span></code></pre></div>
 <pre><code>## $Description
 ## $Description$conformsTo
 ## [1] &quot;2.0&quot;
@@ -734,10 +735,10 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <div id="running-and-editting-simulations-in-the-fsk-file" class="section level2">
 <h2>Running and editting simulations in the FSK file</h2>
 <p>The <strong>FSK2R</strong> package is able to run the simulations defined in an FSK-ML model, as long as they are written in the R programming language. The model</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1"><span class="kw">is_fsk_with_r</span>(FSK_from_R)</a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true"></a><span class="kw">is_fsk_with_r</span>(FSK_from_R)</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p>The number of models included in <code>FSK_from_R</code> can be checked with the <code>n_simuls_fsk()</code> function included in <strong>FSK2R</strong>:</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1"><span class="kw">n_simuls_fsk</span>(FSK_from_R)</a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true"></a><span class="kw">n_simuls_fsk</span>(FSK_from_R)</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
 <p>In this case, the FSK model includes a single simulation. It can be run with the function <code>run_simulation()</code>. This function takes three arguments:</p>
 <ul>
@@ -746,9 +747,9 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <li><code>run_visualization</code>: whether to run the visualizatino script (FALSE by default).</li>
 </ul>
 <p>Because <code>my_fsk</code> only has one simulation, we will set <code>index = 1</code>. When the function is called without specifying that the visualization script shall be run, the simulation is run silently (besides any <code>print</code> or <code>cat</code> defined in <em>model.R</em>):</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1"><span class="kw">run_simulation</span>(FSK_from_R, <span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true"></a><span class="kw">run_simulation</span>(FSK_from_R, <span class="dv">1</span>)</span></code></pre></div>
 <p>In order to run the simulation, <code>run_visualization</code> must be set to TRUE.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="kw">run_simulation</span>(FSK_from_R, <span class="dv">1</span>, <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true"></a><span class="kw">run_simulation</span>(FSK_from_R, <span class="dv">1</span>, <span class="ot">TRUE</span>)</span></code></pre></div>
 <p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAAAVFBMVEUAAAAAADoAAGYAOjoAOpAAZrY6AAA6ADo6AGY6kNtmAABmADpmZmZmtv+QOgCQZgCQ2/+2ZgC2/7a2///bkDrb/9vb////tmb/25D//7b//9v////GkoVkAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAGB0lEQVR4nO2dgXbaNhRA3S7NVrbSsXlzoP//n8M2SWmxdEUs2fK495zk5CTiCS7Sk2yeneabRGnWfgK1oyBAQYCCAAUBCgIUBCgIUBCgIEBBgIIABQEKAhQEKAhQEKAgQEGAggAFAQoCFAQoCFAQoCBAQYCCAAUBCgIUBCgIUBCgIEBBgIIABQEKAhQEKAhQEKAgQEGAggAFAQoCFAQoCFAQoCBAQYCCAAUBCgIUBCgIUBCgIEBBgIIABQEKAhQEKAhQEKAgQEGAggAFAQoCFAQoCFAQoCBAQYCCAAUBmQU1m2EtQXnDFeDiRkEBmquv5Adk7r9mmtfvCwu6f2qvxFqCSoXLjoIIcxDhKpaGggAFAQoCFAQoCFAQoCBAQUAhQaf9eEj68e8s4VakjKC2+Tz+0L3+MCvcmhQRdNq/aWmf/p0dblWKCDruvrz+2AUm2WML2uIICp3DK5WDLkNoMzkoeOqn0Cp23I2rWGD8VCeoufo+9ZfkENlQUCBKpSftFxd0aJpPw2bxS6BBZYKWzkH92nVoPvW5aCNJetlVbFjmuw9/ftvQMh+i3EZx3CK6UZzCEUS85aCrPfWMcGviKga4UQQUBCgIUBCgIEBBwIMKSj+d8JiC7igde0hB4bM/obY5G64S7j2dKwg6V1C8d3NQtPtaV7FaT9qHedARlI6CAAUBCgIUBCgIuF/Qcdd/XLFYv2vznhHUnrcxgU9z8vebhRn7rndOsdmOFhV0x5HF5GPf1bCNFflm7DcD9xybBh58b8Nu+EjwtA8WkOXrNwNLC+rL60YzocqEnP1mYGFBx91QlRCnrkr7VXJQlNoq7ZdfxeJssU46RLkCqhELqKZwBBHbq7QPUuhgdWuV9mE8mgc8aQ8UFfTyHCpRLDqCsuovtMx/HynLL/Nz9s3T0fI27LksXquMoFlHXqFwORsOHHf9+qWgCIfzIa2CYpwPWNdJ0lvIQQMvz7+4ikU57YNXIrhRXDhcORQEKAj4Hwgqe2C3fUF5V/XJ8HkbLhwu874wED9nw4XDKSgpkILikcxB0VCuYmuiIMCT9sD2RtDCcjcnqPCiNdlf3oZlw5Xe9gQ6zNmwbDgFJT1OQfEHmoOij3QV+6Hd2jumygUtPaGmn0HehjnDLZ6SQ08hZ8Oc4RSU1EpBV7/+KSebg25/+5MhV7GbX9Z1JmRVQVMT6kEEJV3tczOhHkdQ0tU+EzrWz8k3FBGUdq3G1HhZPSffUERQ+Gqf63PSNU6oW1YcQTVOqFtK5aCkq33qm1C3FFrFvNpndr+bYSVBM7rhJlmC3PuKFZS3+XtR0PxuFDS7iYKWCKKgDE1mNH8vCprfzWML2i4KAhQEKAhQEKAgQEGAggAFAQoCFAQoCFAQsICgoSSE71J9iN+D+OW5oVum97d6Dt5VZIjx2/CBedc0CfetvVBe0Gl/fjYt3g++C38aOfz5/NfjLhqkPffTxQwdd+O/Ye7bJRsqL2i821ALt2A+7qKCxrKAaJDTvtd3CDvsxrqmMVSk3Y8slYPoLWufvsYEvfyK7zgJ6prPQ01K2hv2xlKCDvEndBYQzUHdx792lMhwio1FO6Pr5JuKLyQoWA4y0g/7qKC2nx3jGIl1Asl3sDKO5eQktIygDnL08G/Io4I+8NveD9KX59gbUa0gGD/jqI8LGtRE7i6XlFtqnWIt7YLaS0lK+OWPryeaqhNGRqVJuo3v3l6JjqCxPDL6to8vPNqkq3KZj6eF78R30n2WuqqRnAyQloOq2yhe5g8+IzjU6Ph45UBNLsOrretQY+MoCFAQoCBAQYCCAAUBCgIUBCgIUBCgIEBBgIIABQEKAhQEKAhQEKAgQEGAggAFAQoCFAQoCFAQoCBAQYCCgNoF9ZVgx11ahVERahfUF02F7ii3CLUL6iukf0+udipA9YK+HfAyj6LULyhePF+c6gWd9n+kVuwWoXpB7dM/8eLWwtQuqC+QTq6KL0Htgg5DffSKabp2QaujIEBBgIIABQEKAhQEKAhQEKAgQEGAggAFAQoCFAQoCFAQoCBAQYCCAAUBCgIUBCgI+A+68q0FtVjaNwAAAABJRU5ErkJggg==" /><!-- --></p>
 <p>The <strong>FSK2R</strong> package can be used to define new simulations for the model using the function <code>set_new_simulation()</code>. It has three arguments:</p>
 <ul>
@@ -757,16 +758,16 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <li><code>parameters</code>: a list describing what parameters to change.</li>
 </ul>
 <p>Because of the scoping rules of R, the function does not change the <code>fsk_object</code> in place. Instead, it returns a copy of the FSK2R list with the additional information about the simulations added.</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1">new_model &lt;-<span class="st"> </span><span class="kw">set_new_simulation</span>(my_fsk, <span class="st">&quot;new&quot;</span>, </a>
-<a class="sourceLine" id="cb41-2" title="2">                                <span class="kw">list</span>(<span class="dt">r =</span> <span class="fl">0.09</span>,</a>
-<a class="sourceLine" id="cb41-3" title="3">                                     <span class="dt">Dose_matrix =</span> <span class="st">&quot;as.matrix(read.table(file =</span><span class="ch">\&quot;</span><span class="st">Dose_matrix.csv</span><span class="ch">\&quot;</span><span class="st">,sep=</span><span class="ch">\&quot;</span><span class="st">,</span><span class="ch">\&quot;</span><span class="st">, header = TRUE, row.names=1))&quot;</span>,</a>
-<a class="sourceLine" id="cb41-4" title="4">                                     <span class="dt">alpha =</span> <span class="fl">0.05</span>,</a>
-<a class="sourceLine" id="cb41-5" title="5">                                     <span class="dt">beta =</span> <span class="fl">0.045</span>,</a>
-<a class="sourceLine" id="cb41-6" title="6">                                     <span class="dt">eta =</span> <span class="fl">0.003</span></a>
-<a class="sourceLine" id="cb41-7" title="7">                                     )</a>
-<a class="sourceLine" id="cb41-8" title="8">                                )</a></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true"></a>new_model &lt;-<span class="st"> </span><span class="kw">set_new_simulation</span>(my_fsk, <span class="st">&quot;new&quot;</span>, </span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true"></a>                                <span class="kw">list</span>(<span class="dt">r =</span> <span class="fl">0.09</span>,</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true"></a>                                     <span class="dt">Dose_matrix =</span> <span class="st">&quot;as.matrix(read.table(file =</span><span class="ch">\&quot;</span><span class="st">Dose_matrix.csv</span><span class="ch">\&quot;</span><span class="st">,sep=</span><span class="ch">\&quot;</span><span class="st">,</span><span class="ch">\&quot;</span><span class="st">, header = TRUE, row.names=1))&quot;</span>,</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true"></a>                                     <span class="dt">alpha =</span> <span class="fl">0.05</span>,</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true"></a>                                     <span class="dt">beta =</span> <span class="fl">0.045</span>,</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true"></a>                                     <span class="dt">eta =</span> <span class="fl">0.003</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true"></a>                                     )</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true"></a>                                )</span></code></pre></div>
 <p>We can now check that <code>new_model</code> has one new simulation than the original model:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1"><span class="kw">n_simuls_fsk</span>(new_model)</a></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true"></a><span class="kw">n_simuls_fsk</span>(new_model)</span></code></pre></div>
 <pre><code>## [1] 2</code></pre>
 <p>The new simulation can be run using the <code>run_simulation</code> function as shown above. The package also has the function <code>run_all_simulations</code> to run every simulation included in the model.</p>
 </div>
@@ -779,19 +780,19 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <li><code>readme_text</code> A character string with the README text.</li>
 </ul>
 <p>Note that this function does not directly update <code>fsk_object</code>. Instead, it returns a copy with the updated information.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1">readme_text &lt;-<span class="st"> &quot;This is an FSK-ML compliant model generated based on an existing R script&quot;</span></a>
-<a class="sourceLine" id="cb44-2" title="2">FSK_from_R &lt;-<span class="st"> </span><span class="kw">set_readme</span>(FSK_from_R, readme_text)</a></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true"></a>readme_text &lt;-<span class="st"> &quot;This is an FSK-ML compliant model generated based on an existing R script&quot;</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true"></a>FSK_from_R &lt;-<span class="st"> </span><span class="kw">set_readme</span>(FSK_from_R, readme_text)</span></code></pre></div>
 <p>Then, the <strong>FSK2R</strong> package includes several functions to query the contents of an instance of <code>FSK2R</code>. For instance, we can retrieve the README content we just defined with <code>get_readme()</code>:</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="kw">get_readme</span>(FSK_from_R)</a></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true"></a><span class="kw">get_readme</span>(FSK_from_R)</span></code></pre></div>
 <pre><code>## [1] &quot;This is an FSK-ML compliant model generated based on an existing R script&quot;</code></pre>
 <p>Furthermore, the data used for the simulations can also be retrieved with <code>get_simulations()</code>:</p>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="co"># get_simulations(my_fsk)</span></a></code></pre></div>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true"></a><span class="co"># get_simulations(my_fsk)</span></span></code></pre></div>
 </div>
 <div id="visualizing-and-editting-the-metadata-of-an-fsk2r-object" class="section level2">
 <h2>Visualizing and editting the metadata of an FSK2R object</h2>
 <p>The <strong>FSK2R</strong> package implements several getters specific for summarizing the metadata of an <code>FSK2R</code> object. All of them take an object of class <code>FSK2R</code> as argument and return a nested list with the relevant information.</p>
 <p>The function <code>get_general_info()</code> summarizes the general metainformation of the model:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1"><span class="kw">get_general_info</span>(my_fsk)</a></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true"></a><span class="kw">get_general_info</span>(my_fsk)</span></code></pre></div>
 <pre><code>## $name
 ## [1] &quot;Toy Model for Testing Purposes&quot;
 ## 
@@ -831,7 +832,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 ## # ... with 5 more variables: publicationTitle &lt;chr&gt;, publicationAbstract &lt;chr&gt;,
 ## #   publicationStatus &lt;chr&gt;, publicationWebsite &lt;chr&gt;, comment &lt;chr&gt;</code></pre>
 <p>The function <code>get_scope()</code> returns the scope of the model:</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1"><span class="kw">get_scope</span>(my_fsk)</a></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true"></a><span class="kw">get_scope</span>(my_fsk)</span></code></pre></div>
 <pre><code>## $product
 ## # A tibble: 3 x 12
 ##   eClass productName productDescript~ productUnit productionMethod packaging
@@ -856,14 +857,14 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 ## #   acceptableOperatorExposureLevel &lt;chr&gt;, acuteReferenceDose &lt;chr&gt;,
 ## #   acceptableDailyIntake &lt;chr&gt;, benchmarkDose &lt;chr&gt;</code></pre>
 <p>The function <code>get_background()</code> returns the background information of the model:</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1"><span class="kw">get_background</span>(my_fsk)</a></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true"></a><span class="kw">get_background</span>(my_fsk)</span></code></pre></div>
 <pre><code>## $studyTitle
 ## [1] &quot;Assessment of integrity of metadata in FKS Lab and associated services&quot;
 ## 
 ## $studyDescription
 ## [1] &quot;This Study will show, wether the FSK Lab will correctly read and run a generic and fully annotated model&quot;</code></pre>
 <p>The function <code>get_modelmath()</code> returns the metainformation of the model parameters:</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1"><span class="kw">get_modelmath</span>(my_fsk)</a></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true"></a><span class="kw">get_modelmath</span>(my_fsk)</span></code></pre></div>
 <pre><code>## $parameter
 ## # A tibble: 11 x 16
 ##    eClass parameterID parameterClassi~ parameterName parameterDescri~
@@ -886,7 +887,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 ## #   parameterValueMax &lt;chr&gt;, parameterError &lt;chr&gt;</code></pre>
 <p>The package also includes functions for updating the metadata based on the template available online: <a href="https://docs.google.com/spreadsheets/d/12ujuQn49Gp2F-zMbCAgsu9wYfLjooeR2c2Ec1zkLkl0/edit#gid=766274181" class="uri">https://docs.google.com/spreadsheets/d/12ujuQn49Gp2F-zMbCAgsu9wYfLjooeR2c2Ec1zkLkl0/edit#gid=766274181</a>.</p>
 <p>For ease of use, the package includes the function <code>download_metadata_schema()</code> to download the latest version of the Metadata Template (at the moment of the package update to CRAN). This function takes as only argument the path where to save the template as a text file. Note that this function may request the user to authenticate with his/her gmail account name and password. This information is handled by the <strong>googlesheets</strong> package and is not, under any circumnstance, accesible to the <strong>FSK2R</strong> package.</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1"><span class="co"># download_metadata_schema(&quot;my_template.xlsx&quot;)</span></a></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true"></a><span class="co"># download_metadata_schema(&quot;my_template.xlsx&quot;)</span></span></code></pre></div>
 <p>The <strong>FSK2R</strong> package includes functions to update the metainformation in an instance of <code>FSK2R</code> with the data defined in a Metadata Template (either in Excel or GoogleSheets format). The function <code>read_fsk_metadata()</code> is used for templates created in GoogleSheets and the function <code>read_fsk_metadata_excel()</code> for those created in Excel and saved locally. Both functions takes three arguments:</p>
 <ul>
 <li><code>fsk_object</code>: The instance of <code>FSK2R</code> to update.</li>
@@ -896,11 +897,11 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 </ul>
 <p>Note that the function <code>read_fsk_metadata()</code> may request the user to authenticate with his/her gmail account name and password. This information is handled by the <strong>googlesheets</strong> package and is not, under any circumnstance, accesible to the <strong>FSK2R</strong> package.</p>
 <p>For training purposes, the <strong>FSK2R</strong> package includes an example Metadata Template in excel format. The path where it is saved can be accessed with the following command.</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1">template_path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;example_template.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;FSK2R&quot;</span>)</a>
-<a class="sourceLine" id="cb57-2" title="2"><span class="kw">print</span>(template_path)</a></code></pre></div>
-<pre><code>## [1] &quot;C:/Users/alberto/AppData/Local/Temp/RtmpKeiY4U/Rinst182cfb32897/FSK2R/extdata/example_template.xlsx&quot;</code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true"></a>template_path &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;example_template.xlsx&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;FSK2R&quot;</span>)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true"></a><span class="kw">print</span>(template_path)</span></code></pre></div>
+<pre><code>## [1] &quot;C:/Users/alberto/AppData/Local/Temp/Rtmpa21xJs/Rinst2ba07cd82054/FSK2R/extdata/example_template.xlsx&quot;</code></pre>
 <p>We will use the data in the template to populate the metadata of the FSK-ML compliant file that we generated from an R script.</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1">FSK_from_R &lt;-<span class="st"> </span><span class="kw">read_fsk_metadata_excel</span>(FSK_from_R, template_path)</a></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true"></a>FSK_from_R &lt;-<span class="st"> </span><span class="kw">read_fsk_metadata_excel</span>(FSK_from_R, template_path)</span></code></pre></div>
 <pre><code>## New names:
 ## * `` -&gt; ...2
 ## * `` -&gt; ...3</code></pre>
@@ -930,17 +931,17 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <li><code>check</code>: whether some checks on the file are performed (TRUE by default).</li>
 </ul>
 <p>As a demonstration, we will export the object <code>my_fsk</code> as an FSK-ML compliant file called <em>out.fskx</em>.</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1"><span class="kw">export_fsk</span>(my_fsk, <span class="dt">out_path=</span><span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;out.fskx&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true"></a><span class="kw">export_fsk</span>(my_fsk, <span class="dt">out_path=</span><span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;out.fskx&quot;</span>))</span></code></pre></div>
 <pre><code>## Warning in file.copy(fsk_object$other_files, out_path): problema al copiar
-## C:\Users\alberto\AppData\Local\Temp\RtmpExQzYA\.\gridExtra_2.3.zip a C:
-## \Users\alberto\AppData\Local\Temp\RtmpExQzYA\\FSK_3061\gridExtra_2.3.zip: No
+## C:\Users\alberto\AppData\Local\Temp\Rtmpo1ZUnz\.\gridExtra_2.3.zip a C:
+## \Users\alberto\AppData\Local\Temp\Rtmpo1ZUnz\\FSK_9874\gridExtra_2.3.zip: No
 ## such file or directory</code></pre>
 <pre><code>## Warning in file.copy(fsk_object$other_files, out_path): problema al copiar
-## C:\Users\alberto\AppData\Local\Temp\RtmpExQzYA\.\ggplot2_3.1.0.zip a C:
-## \Users\alberto\AppData\Local\Temp\RtmpExQzYA\\FSK_3061\ggplot2_3.1.0.zip: No
+## C:\Users\alberto\AppData\Local\Temp\Rtmpo1ZUnz\.\ggplot2_3.1.0.zip a C:
+## \Users\alberto\AppData\Local\Temp\Rtmpo1ZUnz\\FSK_9874\ggplot2_3.1.0.zip: No
 ## such file or directory</code></pre>
 <p>This file can be imported back into R using the <code>import_fsk()</code> function, as usual.</p>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" title="1">imported_model &lt;-<span class="st"> </span><span class="kw">import_fsk</span>(<span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;out.fskx&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true"></a>imported_model &lt;-<span class="st"> </span><span class="kw">import_fsk</span>(<span class="kw">file.path</span>(<span class="kw">tempdir</span>(), <span class="st">&quot;out.fskx&quot;</span>))</span></code></pre></div>
 </div>
 
 

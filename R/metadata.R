@@ -29,8 +29,8 @@ download_metadata_schema <- function(out_path, sheet = NULL) {
 
 #' Converts a dataframe to a list
 #'
-#' Stupid rjson reads data differently than idiot jsonlite, so I had
-#' to code this shit.
+#' This function is needed to convert the output format of rjson to the
+#' one used by FSK2R.
 #'
 #' @param this_frame data.frame to convert to a list.
 #'

@@ -10,6 +10,6 @@ dataframe_to_list(this_frame)
 \item{this_frame}{data.frame to convert to a list.}
 }
 \description{
-Stupid rjson reads data differently than idiot jsonlite, so I had
-to code this shit.
+This function is needed to convert the output format of rjson to the
+one used by FSK2R.
 }

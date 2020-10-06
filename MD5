@@ -1,5 +1,6 @@
-802c57e54f7585a0f7f1162d157f37b0 *DESCRIPTION
+a0ff9eb97a5d02998a6db488ab50c04c *DESCRIPTION
 30457e3658266ad1e9987f9e38d8799f *NAMESPACE
+1e35b8ea055f6b4fbfda68e4f10761e5 *NEWS.md
 4006887e72fd33211abf0959ea055265 *R/checks_for_functions.R
 c1ca825a4f370b8dd4e745d0367f3e40 *R/create_fsk.R
 e62790b703d15b89cf494822b0b9d3ab *R/export_fsk.R
@@ -7,7 +8,7 @@ b8f0a8b20a754b0b76705019ca15337a *R/fsk_runner.R
 817c1905f6b2290d0ccceecdcaa3eebc *R/getters.R
 4cb5571ddbe1646a716132d5785ac3d7 *R/join_nodes.R
 30d6502c71eb0d2487e2939002f5cbc2 *R/live_demo.R
-3f7f3e8925ea115968ee14b36d150397 *R/metadata.R
+bffc2deb4941290e3ad9f0c23203063c *R/metadata.R
 97f24454dab7125b5ed0f2ac743c08fb *R/open_fsk.R
 ff2b3ad8bf884cc0059f35a1fc600b85 *R/session.R
 0da3b03ff4d85143d8b28e6042c83a7d *R/setters.R
@@ -18,7 +19,7 @@ e9acd3a3ff4f205b47e87a27b0d07b79 *build/vignette.rds
 02905d15050f8e5c6c798c320572b5da *inst/CITATION
 a16d7f5edda271ff1ff919d2a6949fb9 *inst/doc/basic_FSK2R.R
 709460a3af913638f2430008e12bb5ab *inst/doc/basic_FSK2R.Rmd
-d0ac61b46a17ac31ae34b0ec4a826d3b *inst/doc/basic_FSK2R.html
+d91a0114d046609127f1d1095145bd58 *inst/doc/basic_FSK2R.html
 c7884c7e866ff15890692ed43fbf774d *inst/extdata/ToyModelv4.fskx
 6d0b7d94cca8774c03c7d3fb0e248829 *inst/extdata/example_template.xlsx
 d689a9f66513571f30c7f299b08cfb0e *inst/extdata/model.r
@@ -30,7 +31,7 @@ eb49a20938c676aa3abb81a395adb2e8 *inst/shiny-examples/myapp/about_FSK_runner.Rmd
 a43618b0749f693baba1b3a73b712eeb *man/check_manifest_files.Rd
 8353a3ce2f3450e071b0d833bcc99f5b *man/convert_metadata_to_lists.Rd
 a6fab6c3535e0583419b1b18dc5d7e22 *man/create_fsk.Rd
-2a5556bbf1463dc9a665d3e3e754c6e4 *man/dataframe_to_list.Rd
+df1bde072a982e47155d7d02f66c4bb2 *man/dataframe_to_list.Rd
 b2ccfcb6639bea280655bf98690dd77c *man/download_metadata_schema.Rd
 8d6200b4dc19587320b7fbaa5c013d74 *man/export_R_model.Rd
 e0ff42f91ae73d3b48a067dcdf83b320 *man/export_fsk.Rd
