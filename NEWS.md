@@ -1,4 +1,8 @@
 
+# FSK2R 0.1.3
+
+* Removed the googlesheets dependencies due to archiving of that package.
+* Small updates in the documentation, especially to adapt to new terminologies.
 
 # FSK2R 0.1.2
 

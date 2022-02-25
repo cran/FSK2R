@@ -20,11 +20,3 @@ Runs every simulation defined in the FSK object. This includes
 the ones originally included in the FSK container, as well as
 the ones added using set_new_simulation().
 }
-\examples{
-\donttest{
- path_example <- system.file("extdata", "ToyModelv4.fskx", package = "FSK2R")
- my_fsk <- import_fsk(path_example)
- run_all_simulations(my_fsk)
-}
-
-}

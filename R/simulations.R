@@ -57,13 +57,6 @@ set_new_simulation <- function(fsk_object, simulation_id, parameters) {
 #'
 #' @return None
 #'
-#' @examples
-#' \donttest{
-#'  path_example <- system.file("extdata", "ToyModelv4.fskx", package = "FSK2R")
-#'  my_fsk <- import_fsk(path_example)
-#'  run_simulation(my_fsk, 1)
-#' }
-#'
 run_simulation <- function(fsk_object, index, run_visualization = FALSE) {
 
     ## Check for missing packages
@@ -202,13 +195,6 @@ run_simulation <- function(fsk_object, index, run_visualization = FALSE) {
 #' @export
 #'
 #' @return None
-#'
-#' @examples
-#' \donttest{
-#'  path_example <- system.file("extdata", "ToyModelv4.fskx", package = "FSK2R")
-#'  my_fsk <- import_fsk(path_example)
-#'  run_all_simulations(my_fsk)
-#' }
 #'
 run_all_simulations <- function(fsk_object, run_visualization = FALSE) {
 

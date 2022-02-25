@@ -21,11 +21,3 @@ None
 Runs the simulation corresponding to index. If defined, it also
 calls any visualization script.
 }
-\examples{
-\donttest{
- path_example <- system.file("extdata", "ToyModelv4.fskx", package = "FSK2R")
- my_fsk <- import_fsk(path_example)
- run_simulation(my_fsk, 1)
-}
-
-}

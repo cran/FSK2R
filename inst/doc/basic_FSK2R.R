@@ -105,9 +105,6 @@ get_background(my_fsk)
 ## -----------------------------------------------------------------------------
 get_modelmath(my_fsk)
 
-## ---- eval=FALSE--------------------------------------------------------------
-#  # download_metadata_schema("my_template.xlsx")
-
 ## -----------------------------------------------------------------------------
 template_path <- system.file("extdata", "example_template.xlsx", package = "FSK2R")
 print(template_path)

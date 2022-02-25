@@ -284,20 +284,11 @@ get_modelmath(my_fsk)
 
 The package also includes functions for updating the metadata based on the template available online: https://docs.google.com/spreadsheets/d/12ujuQn49Gp2F-zMbCAgsu9wYfLjooeR2c2Ec1zkLkl0/edit#gid=766274181. 
 
-For ease of use, the package includes the function `download_metadata_schema()` to download the latest version of the Metadata Template (at the moment of the package update to CRAN). This function takes as only argument the path where to save the template as a text file. Note that this function may request the user to authenticate with his/her gmail account name and password. This information is handled by the **googlesheets** package and is not, under any circumnstance, accesible to the **FSK2R** package.
-
-```{r, eval=FALSE}
-# download_metadata_schema("my_template.xlsx")
-```
-
-The **FSK2R** package includes functions to update the metainformation in an instance of `FSK2R` with the data defined in a Metadata Template (either in Excel or GoogleSheets format). The function `read_fsk_metadata()` is used for templates created in GoogleSheets and the function `read_fsk_metadata_excel()` for those created in Excel and saved locally. Both functions takes three arguments:
+The **FSK2R** package includes functions to update the metainformation in an instance of `FSK2R` with the data defined in a Metadata Template (in Excel) using the function `read_fsk_metadata_excel()` for those created in Excel and saved locally. It takes 3 arguemnts:
 
 * `fsk_object`: The instance of `FSK2R` to update.
-* `title` (only `read_fsk_metadata()`): Title of the GoogleSheet where the metadata is stored.
 * `path` (only `read_fsk_metadata_excel()`): Path where the Metadata Template is saved.
 * `type_of_model`: Type of model.
-
-Note that the function `read_fsk_metadata()` may request the user to authenticate with his/her gmail account name and password. This information is handled by the **googlesheets** package and is not, under any circumnstance, accesible to the **FSK2R** package.
 
 For training purposes, the **FSK2R** package includes an example Metadata Template in excel format. The path where it is saved can be accessed with the following command.
 
